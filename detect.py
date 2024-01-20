@@ -3,25 +3,26 @@ import numpy as np
 import os
 import imutils
 from tensorflow.keras.models import load_model
-
+import smtplib
+import imghdr
+from email.message import EmailMessage
 
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
-net = cv2.dnn.readNet("yolov3-custom_7000.weights", "yolov3-custom.cfg")
+net = cv2.dnn.readNet("/yolov3-custom_7000[1].weights", "/yolov3-custom[1].cfg")
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
 
-
-model = load_model('helmet-nonhelmet_cnn.h5')
+model = load_model('/helmet-nonhelmet_cnn[2].h5')
 print('model loaded!!!')
 
-cap = cv2.VideoCapture('video.mp4')
+cap = cv2.VideoCapture('/video[1].mp4')
 COLORS = [(0,255,0),(0,0,255)]
 
 layer_names = net.getLayerNames()
 output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
- 
+
 
 fourcc = cv2.VideoWriter_fourcc(*"XVID")
 writer = cv2.VideoWriter('output.avi', fourcc, 5,(888,500))
@@ -93,12 +94,13 @@ while ret:
                 if y_h>0 and x_h>0:
                     h_r = img[y_h:y_h+h_h , x_h:x_h +w_h]
                     c = helmet_or_nohelmet(h_r)
-                    cv2.putText(img,['helmet','no-helmet'][c],(x,y-100),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),2)                
+                    cv2.putText(img,['helmet','no-helmet'][c],(x,y-100),cv2.FONT_HERSHEY_SIMPLEX,2,(0,255,0),2)
                     cv2.rectangle(img, (x_h, y_h), (x_h + w_h, y_h + h_h),(255,0,0), 10)
 
 
     writer.write(img)
-    cv2.imshow("Image", img)
+    from google.colab.patches import cv2_imshow
+    cv2_imshow(img)
 
     if cv2.waitKey(1) == 27:
         break
@@ -107,3 +109,12 @@ writer.release()
 cap.release()
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+#send email
+Sender_Email ="xxx@gmail.com"
+Reciever_Email="abc@gmail.com"
+Password="9876543210"
+newMessage=EmailMessage()
+newMessage['Subject']="Not Wearing Helmet!!!"
+newMessage['From']=Sender_Email
+newMessage['To']=Reciever_Email
+newMessage.set_content('Let me know what you think. Image attached!!')

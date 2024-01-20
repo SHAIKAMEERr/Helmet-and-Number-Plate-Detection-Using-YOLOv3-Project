@@ -1,8 +1,11 @@
+
 ---
 
 # Helmet Detection System
 
-This project focuses on detecting helmets in images or videos using computer vision techniques and a pre-trained deep learning model.
+## Overview
+
+This is a Python script for a helmet detection system using YOLO (You Only Look Once) object detection and a pre-trained CNN (Convolutional Neural Network) model for classifying helmet presence in detected regions. The system processes a video feed, identifies individuals, and checks whether they are wearing a helmet.
 
 ## Prerequisites
 
@@ -11,48 +14,46 @@ This project focuses on detecting helmets in images or videos using computer vis
 - NumPy
 - imutils
 - TensorFlow
-- CUDA (for GPU acceleration)
+- Google Colab (for displaying images)
 
 ## Setup
 
-1. Clone this repository:
+1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/your-repository.git
+   git clone <repository_url>
+   cd <repository_directory>
    ```
 
-2. Download the YOLOv3 weights and configuration file from [here](https://pjreddie.com/darknet/yolo/) and place them in the project directory.
-
-3. Download the pre-trained helmet detection model (`helmet-nonhelmet_cnn.h5`) and place it in the project directory.
-
-4. Install dependencies:
+2. Install dependencies:
 
    ```bash
-   pip install opencv-python numpy imutils tensorflow
+   pip install -r requirements.txt
    ```
 
-5. Run the code:
+## Usage
+
+1. Ensure that the necessary model weights and configuration files are available in the specified paths.
+2. Modify the video file path in the script to point to your desired input video (`/video[1].mp4`).
+3. Run the script:
 
    ```bash
    python helmet_detection.py
    ```
 
-## Usage
+   Press `Esc` to exit the video feed.
 
-1. Modify the `video.mp4` file or replace it with your own video file.
-2. Ensure that the YOLOv3 weights and configuration files are appropriately named (`yolov3-custom_7000.weights` and `yolov3-custom.cfg`).
-3. Make sure the pre-trained model file is named `helmet-nonhelmet_cnn.h5`.
-4. Run the script and observe the helmet detection in the output video (`output.avi`).
+## Output
 
-## Important Note
+The script processes the video, detects individuals, identifies helmets, and highlights them with bounding boxes. The processed video is saved as `output.avi`.
 
-This code assumes the presence of a CUDA-enabled GPU for accelerated processing. If you don't have a compatible GPU, you may need to adjust the code to run on CPU.
+## Email Notification
 
-## Credits
-
-- YOLOv3: [YOLO: Real-Time Object Detection](https://pjreddie.com/darknet/yolo/)
-- Helmet Detection Model: [Helmet Detection CNN](https://example-link-to-your-model.com)
-
-Feel free to contribute, report issues, or suggest improvements!
+The script includes functionality to send an email notification when a person is detected without a helmet. Configure the sender's and receiver's email addresses and password in the script.
 
 ---
+
+MD5 Hash for the Code: **[MD5_HASH]**
+
+---
+
